@@ -24,7 +24,7 @@ theorem PEqualNP.Outside.R_meta_3688_1
   intro x1 x2 x3 x4 hcard h2n hc4 hmatch hao hfun
   by_cases hp : (∃ u : Fin x1, ∀ v : Fin x1, (u, v) ∈ x2 → v = x3 u) ∨ (∃ v : Fin x1, ∀ u : Fin x1, (u, v) ∈ x2 → x3 u = v)
   · exact h1 x1 x2 x3 x4 hcard h2n hc4 hmatch hao hfun hp
-  · push_neg at hp
+  · push Not at hp
     exact h2 x1 x2 x3 x4 hcard h2n hc4 hmatch hao hfun
-      ⟨fun u => let ⟨v, hmem, hne⟩ := hp.1 u; ⟨v, hne, hmem⟩,
-       fun v => let ⟨u, hmem, hne⟩ := hp.2 v; ⟨u, hne, hmem⟩⟩
+      ⟨fun u => Exists.elim (hp.1 u) (fun v h => ⟨v, h.2, h.1⟩),
+       fun v => Exists.elim (hp.2 v) (fun u h => ⟨u, h.2, h.1⟩)⟩
